@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: download artifact
-        run: artifact/download-artifact@v4
+        uses: artifact/download-artifact@v4
         with:
           name: build-jar
       - name: output content
