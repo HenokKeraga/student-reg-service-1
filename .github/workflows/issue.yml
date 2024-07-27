@@ -4,5 +4,9 @@ jobs:
   issue:
     runs-on: ubuntu-latest
     steps:
-      - name: output github context
-        run: echo " ${{ toJSON(github)}} "
+      - name: output event
+        run: echo "${{toJSON(github.event)}}"
+      - name: print secret
+        run: echo "${{toJSON(secrets)}}"
+      - name: print secret token
+        run: echo "${{secrets.GITHUB_TOKEN}}"
