@@ -18,6 +18,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      jar-name: ${{steps.publish.outputs.jar-name}}
     steps:
       - name: get code
         uses: actions/checkout@v4
@@ -30,6 +32,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
       - name: build app
         run: ./gradlew build
+      - name: publish jar name
+        id: publish
+        run: find build/libs/*plain.jar -type f -execdir echo 'jar-name={}'  >> $GITHUB_OUTPUT ';'
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -45,5 +50,7 @@ jobs:
           name: build-jar
       - name: output content
         run: ls
+      - name: output jar name
+        run: echo "${{needs.build.outputs.jar-name}}"
       - name: deploy
         run: echo "deploying  ..."
