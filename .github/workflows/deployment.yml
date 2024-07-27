@@ -33,11 +33,17 @@ jobs:
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build
-          path: build
+          name: build-jar
+          path: build/libs/*.jar
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: download artifact
+        run: artifact/download-artifact@v4
+        with:
+          name: build-jar
+      - name: output content
+        run: ls
       - name: deploy
         run: echo "deploying  ..."
