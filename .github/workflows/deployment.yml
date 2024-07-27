@@ -30,6 +30,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
       - name: build app
         run: ./gradlew build
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build
   deploy:
     needs: build
     runs-on: ubuntu-latest
