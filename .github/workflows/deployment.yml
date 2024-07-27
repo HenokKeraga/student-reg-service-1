@@ -15,4 +15,24 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
       - name: test code
         run: ./gradlew test
-
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v4
+      - name: install java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          version: 17
+      - name: install gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: build app
+        run: ./gradlew build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+      - run: echo "deploying  ..."
